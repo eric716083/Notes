@@ -1,0 +1,83 @@
+ Windows 10 MutiLanguage install 
+
+
+dism /mount-image /imagefile:boot.wim /index:2 /mountdir:D:\ISO\TEST08_boot
+
+dism /mount-image /imagefile:install.wim /index:1 /mountdir:D:\ISO\TEST08_windows
+
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\en-us\lp.cab"
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\en-us\WinPE-Setup_en-us.cab"
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\en-us\WinPE-Setup-Client_en-us.cab"
+
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\zh-cn\lp.cab"
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\zh-cn\WinPE-Setup_zh-cn.cab"
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\zh-cn\WinPE-Setup-Client_zh-cn.cab"
+
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\ja-jp\lp.cab"
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\ja-jp\WinPE-Setup_ja-jp.cab"
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\ja-jp\WinPE-Setup-Client_ja-jp.cab"
+
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\KO-KR\lp.cab"
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\KO-KR\WinPE-Setup_KO-KR.cab"
+
+dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\KO-KR\WinPE-Setup-Client_KO-KR.cab"
+
+
+Dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\WinPE-FontSupport-ZH-CN.cab"
+
+Dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\WinPE-FontSupport-JA-JP.cab"
+
+Dism /image:D:\ISO\TEST08_boot /add-package /packagepath:"D:\ISO\mu_windows_10\Windows Preinstallation Environment\x64\WinPE_OCs\WinPE-FontSupport-KO-KR.cab"
+
+	Dism /image:D:\ISO\TEST08_boot /Set-SysLocale:en-US /distribution:D:\ISO\TEST08_my_distribution
+
+	Dism /image:D:\ISO\TEST08_boot /Set-SetupUILang:en-US /distribution:D:\ISO\TEST08_my_distribution
+
+xcopy D:\ISO\TEST08_boot\sources\en-US D:\ISO\TEST08_my_distribution\sources\en-US /cherkyi
+xcopy D:\ISO\TEST08_boot\sources\zh-CN D:\ISO\TEST08_my_distribution\sources\zh-CN /cherkyi
+xcopy D:\ISO\TEST08_boot\sources\ja-JP D:\ISO\TEST08_my_distribution\sources\ja-JP /cherkyi
+xcopy D:\ISO\TEST08_boot\sources\ko-KR D:\ISO\TEST08_my_distribution\sources\ko-KR /cherkyi
+
+==================================================
+
+Dism /Image:"D:\ISO\TEST08_windows" /get-packages /format:table
+
+Dism /Image:"D:\ISO\TEST08_windows" /Add-Package /PackagePath="D:\ISO\mu_windows_10\x64\langpacks\Microsoft-Windows-Client-Language-Pack_x64_en-us.cab"
+
+Dism /Image:"D:\ISO\TEST08_windows" /Add-Package /PackagePath="D:\ISO\mu_windows_10\x64\langpacks\Microsoft-Windows-Client-Language-Pack_x64_zh-cn.cab"
+
+Dism /Image:"D:\ISO\TEST08_windows" /Add-Package /PackagePath="D:\ISO\mu_windows_10\x64\langpacks\Microsoft-Windows-Client-Language-Pack_x64_ja-jp.cab"
+
+Dism /Image:"D:\ISO\TEST08_windows" /Add-Package /PackagePath="D:\ISO\mu_windows_10\x64\langpacks\Microsoft-Windows-Client-Language-Pack_x64_ko-kr.cab"
+
+Dism /Image:"D:\ISO\TEST08_windows" /get-packages /format:table
+
+Dism /Image:"D:\ISO\TEST08_windows" /Get-Intl
+
+Dism /Image:"D:\ISO\TEST08_windows" /Set-AllIntl:en-US
+
+==================================================
+
+Dism /image:D:\ISO\TEST08_windows /gen-langINI /distribution:D:\ISO\TEST08_my_distribution
+
+
+	Dism /image:D:\ISO\TEST08_boot /Set-SetupUILang:en-US /distribution:D:\ISO\TEST08_my_distribution
+		
+
+Xcopy D:\ISO\TEST08_my_distribution\sources\lang.ini D:\ISO\TEST08_boot\sources\lang.ini
+
+==================================================
+==================================================
+Dism /unmount-image /mountdir:D:\ISO\TEST08_boot /commit
+Dism /unmount-image /mountdir:D:\ISO\TEST08_windows /commit
